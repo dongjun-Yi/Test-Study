@@ -2,18 +2,31 @@ package sample.cafekiosk.unit;
 
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
-import sample.cafekiosk.unit.beverage.Latte;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CafeKioskTest {
     @Test
-    void add() {
+    void add_manual_test() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
 
         System.out.println(">>> 담긴 음료 수 : " + cafeKiosk.getBeverages().size());
         System.out.println(">>> 담긴 음료 : " + cafeKiosk.getBeverages().get(0).getName());
+
+    }
+
+    @Test
+    void add() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        cafeKiosk.add(new Americano());
+
+        // assertThat으로 통해 테스트 자동화
+        assertThat(cafeKiosk.getBeverages().size()).isEqualTo(1);
+        // 위와 동일한 테스트코드
+        assertThat(cafeKiosk.getBeverages()).hasSize(1);
+
+        assertThat(cafeKiosk.getBeverages().get(0).getName()).isEqualTo("아메리카노");
 
     }
 }
