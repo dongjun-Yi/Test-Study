@@ -2,6 +2,7 @@ package sample.cafekiosk.unit;
 
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
+import sample.cafekiosk.unit.beverage.Latte;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,6 +40,22 @@ class CafeKioskTest {
 
         // 삭제
         cafeKiosk.remove(americano);
+        assertThat(cafeKiosk.getBeverages()).isEmpty();
+    }
+
+    @Test
+    void clear() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+
+        cafeKiosk.add(americano);
+        cafeKiosk.add(latte);
+
+        assertThat(cafeKiosk.getBeverages()).hasSize(2);
+
+        // 모두 비우기
+        cafeKiosk.clear();
         assertThat(cafeKiosk.getBeverages()).isEmpty();
     }
 }
