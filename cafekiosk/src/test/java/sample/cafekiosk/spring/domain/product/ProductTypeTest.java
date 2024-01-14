@@ -1,11 +1,15 @@
 package sample.cafekiosk.spring.domain.product;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTypeTest {
 
@@ -19,7 +23,6 @@ class ProductTypeTest {
         boolean result = ProductType.containStockType(givenType);
 
         //then
-
         assertThat(result).isFalse();
     }
 
@@ -33,9 +36,55 @@ class ProductTypeTest {
         boolean result = ProductType.containStockType(givenType);
 
         //then
-
         assertThat(result).isTrue();
     }
 
+    @DisplayName("상품 타입이 재고 관련 타입인지를 모두 체크한다.")
+    @Test
+    void containsStockType3() {
+        //given
+        ProductType givenType1 = ProductType.HANDMADE;
+        ProductType givenType2 = ProductType.BOTTLE;
+        ProductType givenType3 = ProductType.BAKERY;
 
+        //when
+        boolean result1 = ProductType.containStockType(givenType1);
+        boolean result2 = ProductType.containStockType(givenType2);
+        boolean result3 = ProductType.containStockType(givenType3);
+
+        //then
+        assertThat(result1).isTrue();
+        assertThat(result2).isTrue();
+        assertThat(result3).isTrue();
+    }
+
+    @DisplayName("상품 타입이 재고 관련 타입인지를 모두 체크한다. @ParameterizedTest 사용")
+    @CsvSource({"HANDMADE, false", "BOTTLE, true", "BAKERY, true"})
+    @ParameterizedTest
+    void containsStockType4(ProductType productType, boolean expected) {
+        //when
+        boolean result = ProductType.containStockType(productType);
+
+        //then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> provideProductTypesForCheckingStockType() {
+        return Stream.of(
+                Arguments.of(ProductType.HANDMADE, false),
+                Arguments.of(ProductType.BOTTLE, true),
+                Arguments.of(ProductType.BAKERY, true)
+        );
+    }
+
+    @DisplayName("상품 타입이 재고 관련 타입인지를 모두 체크한다. @ParameterizedTest 사용")
+    @MethodSource("provideProductTypesForCheckingStockType")
+    @ParameterizedTest
+    void containsStockType5(ProductType productType, boolean expected) {
+        //when
+        boolean result = ProductType.containStockType(productType);
+
+        //then
+        assertThat(result).isEqualTo(expected);
+    }
 }
