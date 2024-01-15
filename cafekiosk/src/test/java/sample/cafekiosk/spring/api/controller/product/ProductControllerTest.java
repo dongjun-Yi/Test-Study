@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import sample.cafekiosk.spring.api.controller.product.dto.ProductCreateRequest;
 import sample.cafekiosk.spring.api.service.product.ProductService;
 import sample.cafekiosk.spring.api.service.product.response.ProductResponse;
 import sample.cafekiosk.spring.domain.product.ProductSellingStatus;
@@ -37,9 +38,9 @@ class ProductControllerTest {
     @Test
     void createProduct() throws Exception {
         //given
-        ProductResponse request = ProductResponse.builder()
+        ProductCreateRequest request = ProductCreateRequest.builder()
                 .type(ProductType.HANDMADE)
-                .sellingType(ProductSellingStatus.SELLING)
+                .sellingStatus(ProductSellingStatus.SELLING)
                 .name("아메리카노")
                 .price(4000)
                 .build();
@@ -57,8 +58,8 @@ class ProductControllerTest {
     @Test
     void createProductWithoutType() throws Exception {
         //given
-        ProductResponse request = ProductResponse.builder()
-                .sellingType(ProductSellingStatus.SELLING)
+        ProductCreateRequest request = ProductCreateRequest.builder()
+                .sellingStatus(ProductSellingStatus.SELLING)
                 .name("아메리카노")
                 .price(4000)
                 .build();
@@ -80,7 +81,7 @@ class ProductControllerTest {
     @Test
     void createProductWithoutSellingStatus() throws Exception {
         //given
-        ProductResponse request = ProductResponse.builder()
+        ProductCreateRequest request = ProductCreateRequest.builder()
                 .type(ProductType.HANDMADE)
                 .name("아메리카노")
                 .price(4000)
@@ -103,9 +104,9 @@ class ProductControllerTest {
     @Test
     void createProductWithoutName() throws Exception {
         //given
-        ProductResponse request = ProductResponse.builder()
+        ProductCreateRequest request = ProductCreateRequest.builder()
                 .type(ProductType.HANDMADE)
-                .sellingType(ProductSellingStatus.SELLING)
+                .sellingStatus(ProductSellingStatus.SELLING)
                 .price(4000)
                 .build();
 
@@ -126,9 +127,9 @@ class ProductControllerTest {
     @Test
     void createProductWithZeroPrice() throws Exception {
         //given
-        ProductResponse request = ProductResponse.builder()
+        ProductCreateRequest request = ProductCreateRequest.builder()
                 .type(ProductType.HANDMADE)
-                .sellingType(ProductSellingStatus.SELLING)
+                .sellingStatus(ProductSellingStatus.SELLING)
                 .name("아메리카노")
                 .price(0)
                 .build();
